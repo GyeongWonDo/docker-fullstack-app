@@ -23,7 +23,7 @@ jobs:
         run: |
           docker build -t appchemist/docker-frontend ./frontend
           docker build -t appchemist/docker-backend ./backend
-          docker build -t tappchemist/docker-nginx ./nginx
+          docker build -t appchemist/docker-nginx ./nginx
 
       - name: Push docker image
         run: |
