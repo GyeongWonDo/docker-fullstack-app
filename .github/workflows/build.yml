@@ -30,3 +30,30 @@ jobs:
           docker push appchemist/docker-frontend
           docker push appchemist/docker-backend
           docker push appchemist/docker-nginx
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: generate deployment package
+        run: zip -r deploy.zip .
+
+      - name: Get current time
+        uses: 1466587594/get-current-time@v2
+        id: current-time
+        with:
+          format: YYYYMMDD_HH-mm-ss
+          utcOffset: "+09:00"
+
+      - name: Deploy to ES BeanStalk
+        uses: einaregilsson/beanstalk-deploy@v14
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: docker-fullstack-app
+          environment_name: Dockerfullstackapp-env
+          region: ap-northeast-1
+          version_label: docker-app-${{steps.current-time.outputs.formattedTime}}
+          deployment_package: deploy.zip
