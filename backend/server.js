@@ -7,6 +7,14 @@ const app = express();
 
 app.use(bodyParser.json());
 
+db.pool.query(`CREATE TABLE lists (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    value VARCHAR(10) DEFAULT NULL,
+    PRIMARY KEY (id)
+  )`, (err, results, fields) => {
+    console.log("result", results)
+})
+
 app.get('/api/values', function (req, res) {
     db.pool.query(`SELECT * FROM lists;`,
         (err, results, fileds) => {
