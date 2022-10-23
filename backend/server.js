@@ -32,5 +32,11 @@ app.post('/api/value', function (req, res, next) {
 
 
 app.listen(5000, () => {
+    console.log("서버 정보 : " + process.env.MYSQL_HOST);
+    console.log("서버 정보 : " + process.env.MYSQL_USER);
+    console.log("서버 정보 : " + process.env.MYSQL_ROOT_PASSWORD);
+    console.log("서버 정보 : " + process.env.MYSQL_DATABASE);
+    console.log("서버 정보 : " + process.env.MYSQL_PORT);
+
     console.log("애플리케이션 시작 : 5000")
 })
